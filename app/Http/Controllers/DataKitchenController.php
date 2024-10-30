@@ -42,6 +42,9 @@ class DataKitchenController extends Controller
         $unit = \App\Models\Unit::where('lantai', $request->input('lantai'))
                                 ->where('nama_unit', $request->input('unit'))
                                 ->first();
+        if ($existingData) {
+        return response()->json(['message' => 'Data kitchen dengan lantai dan unit ini sudah ada.'], 409); // HTTP 409 Conflict
+    }
     
         if (!$unit) {
             return response()->json(['message' => 'Unit tidak ditemukan'], 404);
