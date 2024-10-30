@@ -24,11 +24,13 @@ class UserStaffController extends Controller
         $request->validate([
             'username' => 'required|unique:user_staff',
             'password' => 'required|min:6',
+            'role' => 'required', // Tambah validasi role
         ]);
 
         $user = UserStaff::create([
             'username' => $request->username,
-            'password' => bcrypt($request->password), // hash password
+            'password' => $request->password, // Hash otomatis dari model
+            'role' => $request->role, // Tambahkan role
         ]);
 
         return response()->json([
@@ -59,6 +61,7 @@ class UserStaffController extends Controller
         $request->validate([
             'username' => 'required|unique:user_staff,username,' . $username . ',username',
             'password' => 'nullable|min:6',
+            'role' => 'required', // Tambah validasi role
         ]);
 
         $user = UserStaff::where('username', $username)->first();
@@ -67,11 +70,14 @@ class UserStaffController extends Controller
             return response()->json(['message' => 'Data tidak ditemukan'], 404);
         }
 
-        $data = ['username' => $request->username];
+        $data = [
+            'username' => $request->username,
+            'role' => $request->role, // Tambahkan role
+        ];
 
         // Update password jika diisi
         if ($request->password) {
-            $data['password'] = bcrypt($request->password);
+            $data['password'] = $request->password; // Hash otomatis dari model
         }
 
         $user->update($data);

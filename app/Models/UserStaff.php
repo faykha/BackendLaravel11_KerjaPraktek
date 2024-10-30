@@ -16,6 +16,7 @@ class UserStaff extends Authenticatable
     protected $fillable = [
         'username',
         'password',
+        'role', 
     ];
 
     // Menyembunyikan kolom password saat model di-serialize

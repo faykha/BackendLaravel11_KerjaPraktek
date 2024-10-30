@@ -40,10 +40,5 @@ Route::put('/data-statik/{type_unit}', [DataStatikController::class, 'update']);
 Route::delete('/data-statik/{type_unit}', [DataStatikController::class, 'destroy']);
 
 use App\Http\Controllers\UserStaffController;
-Route::apiResource('user_staff', UserStaffController::class);
+Route::apiResource('user', UserStaffController::class);
 
-use App\Http\Controllers\UserAdminController;
-Route::apiResource('user_admin', UserAdminController::class);
-
-use App\Http\Controllers\UserVendorController;
-Route::apiResource('user_vendor', UserVendorController::class);
