@@ -37,14 +37,21 @@ class DataKitchenController extends Controller
             'LEBAR_MAXIMAL_MCB' => 'required|integer',
             'TINGGI_MCB' => 'required|integer',
         ]);
+
+
+        $existingData = DataKitchen::whereHas('unit', function($query) use ($request) {
+            $query->where('lantai', $request->input('lantai'))
+                  ->where('nama_unit', $request->input('unit'));
+        })->exists();
+    
+        if ($existingData) {
+            return response()->json(['message' => 'Data kitchen dengan lantai dan unit ini sudah ada.'], 409); // HTTP 409 Conflict
+        }
     
         // Ambil unit berdasarkan lantai dan nama unit
         $unit = \App\Models\Unit::where('lantai', $request->input('lantai'))
                                 ->where('nama_unit', $request->input('unit'))
                                 ->first();
-        if ($existingData) {
-        return response()->json(['message' => 'Data kitchen dengan lantai dan unit ini sudah ada.'], 409); // HTTP 409 Conflict
-    }
     
         if (!$unit) {
             return response()->json(['message' => 'Unit tidak ditemukan'], 404);
