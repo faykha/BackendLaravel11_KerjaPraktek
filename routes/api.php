@@ -3,9 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) 
-{return $request->user();
-})->middleware('auth:sanctum');
+
 
 use App\Http\Controllers\DataKitchenController;
 Route::get('data_kitchen', [DataKitchenController::class, 'index']);
@@ -41,4 +39,12 @@ Route::delete('/data-statik/{type_unit}', [DataStatikController::class, 'destroy
 
 use App\Http\Controllers\UserStaffController;
 Route::apiResource('user', UserStaffController::class);
+
+use App\Http\Controllers\FlutterAuthController;
+
+// Route untuk proses login dari mobile
+Route::post('/loginmobile', [FlutterAuthController::class, 'login']);
+
+// Route untuk logout dari mobile
+Route::post('/logoutmobile', [FlutterAuthController::class, 'logout']);
 
