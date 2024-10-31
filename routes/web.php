@@ -18,4 +18,9 @@ Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard'
 // Tambahkan route untuk logout jika diperlukan
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+//redirect
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
 
