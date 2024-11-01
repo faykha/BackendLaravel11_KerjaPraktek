@@ -22,6 +22,9 @@
             text-align: center;
             margin: 20px 0;
         }
+        .table-responsive {
+            overflow-x: auto;
+        }
     </style>
 </head>
 <body>
@@ -108,6 +111,17 @@
                     <th>TINGGI BALOK A</th>
                     <th>TINGGI BALOK B</th>
                     <th>TINGGI CEILING A</th>
+                    <th>TINGGI CEILING B</th>
+                    <th>TINGGI CEILING C</th>
+                    <th>Siku Dinding Base</th>
+                    <th>Siku Dinding Wall</th>
+                    <th>Sudut Lantai x Dinding</th>
+                    <th>TITIK KRAN AIR L</th>
+                    <th>TITIK KRAN AIR T</th>
+                    <th>TITIK DISPOSAL PIPE</th>
+                    <th>LEBAR MINIMAL MCB</th>
+                    <th>LEBAR MAXIMAL MCB</th>
+                    <th>TINGGI MCB</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -117,12 +131,13 @@
         </table>
     </div>
 </div>
+</div>
 
 <!-- Bootstrap JS & Icons -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    const apiUrl = 'http://localhost:8000/data-statik';
+    const apiUrl = 'http://localhost:8000/api/data-statik';
 
     // Fungsi untuk mengambil dan menampilkan semua data
     async function fetchData() {
@@ -140,6 +155,19 @@
                     <td>${item.TINGGI_BALOK_A_static || '-'}</td>
                     <td>${item.TINGGI_BALOK_B_static || '-'}</td>
                     <td>${item.TINGGI_CEILING_A_static || '-'}</td>
+                    <td>${item.TINGGI_BALOK_B_static || '-'}</td>
+                    <td>${item.TINGGI_CEILING_A_static || '-'}</td>
+                    <td>${item.TINGGI_CEILING_B_static || '-'}</td>
+                    <td>${item.TINGGI_CEILING_C_static || '-'}</td>
+                    <td>${item.Siku_Dinding_base_static || '-'}</td>
+                    <td>${item.Siku_Dinding_wall_static || '-'}</td>
+                    <td>${item.Sudut_Lantai_x_Dinding_static || '-'}</td>
+                    <td>${item.TITIK_KRAN_AIR_L_static || '-'}</td>
+                    <td>${item.TITIK_KRAN_AIR_T_static || '-'}</td>
+                    <td>${item.TITIK_DISPOSAL_PIPE_static || '-'}</td>
+                    <td>${item.LEBAR_MINIMAL_MCB_static || '-'}</td>
+                    <td>${item.LEBAR_MAXIMAL_MCB_static || '-'}</td>
+                    <td>${item.TINGGI_MCB_static || '-'}</td>
                     <td>
                         <button class="btn btn-sm btn-warning" onclick="editData('${item.type_unit}')">Edit</button>
                         <button class="btn btn-sm btn-danger" onclick="deleteData('${item.type_unit}')">Delete</button>
@@ -161,7 +189,17 @@
             TINGGI_BALOK_A_static: document.getElementById('TINGGI_BALOK_A_static').value || null,
             TINGGI_BALOK_B_static: document.getElementById('TINGGI_BALOK_B_static').value || null,
             TINGGI_CEILING_A_static: document.getElementById('TINGGI_CEILING_A_static').value || null,
-            // Tambahkan field lainnya jika diperlukan
+            TINGGI_CEILING_B_static: document.getElementById('TINGGI_CEILING_B_static').value || null,
+            TINGGI_CEILING_C_static: document.getElementById('TINGGI_CEILING_C_static').value || null,
+            Siku_Dinding_base_static: document.getElementById('Siku_Dinding_base_static').value || null,
+            Siku_Dinding_wall_static: document.getElementById('Siku_Dinding_wall_static').value || null,
+            Sudut_Lantai_x_Dinding_static: document.getElementById('Sudut_Lantai_x_Dinding_static').value || null,
+            TITIK_KRAN_AIR_L_static: document.getElementById('TITIK_KRAN_AIR_L_static').value || null,
+            TITIK_KRAN_AIR_T_static: document.getElementById('TITIK_KRAN_AIR_T_static').value || null,
+            TITIK_DISPOSAL_PIPE_static: document.getElementById('TITIK_DISPOSAL_PIPE_static').value || null,
+            LEBAR_MINIMAL_MCB_static: document.getElementById('LEBAR_MINIMAL_MCB_static').value || null,
+            LEBAR_MAXIMAL_MCB_static: document.getElementById('LEBAR_MAXIMAL_MCB_static').value || null,
+            TINGGI_MCB_static: document.getElementById('TINGGI_MCB_static').value || null,
         };
 
         const method = data.type_unit ? 'PUT' : 'POST';
@@ -197,7 +235,19 @@
             document.getElementById('type_unit').value = data.type_unit;
             document.getElementById('LEBAR_BIDANG_static').value = data.LEBAR_BIDANG_static || '';
             document.getElementById('TINGGI_BALOK_A_static').value = data.TINGGI_BALOK_A_static || '';
-            // Isi form dengan field lainnya jika diperlukan
+            document.getElementById('TINGGI_BALOK_B_static').value = data.TINGGI_BALOK_B_static || '';
+            document.getElementById('TINGGI_CEILING_A_static').value = data.TINGGI_CEILING_A_static || '';
+            document.getElementById('TINGGI_CEILING_B_static').value = data.TINGGI_CEILING_B_static || '';
+            document.getElementById('TINGGI_CEILING_C_static').value = data.TINGGI_CEILING_C_static || '';
+            document.getElementById('Siku_Dinding_base_static').value = data.Siku_Dinding_base_static || '';
+            document.getElementById('Siku_Dinding_wall_static').value = data.Siku_Dinding_wall_static || '';
+            document.getElementById('Sudut_Lantai_x_Dinding_static').value = data.Sudut_Lantai_x_Dinding_static || '';
+            document.getElementById('TITIK_KRAN_AIR_L_static').value = data.TITIK_KRAN_AIR_L_static || '';
+            document.getElementById('TITIK_KRAN_AIR_T_static').value = data.TITIK_KRAN_AIR_T_static || '';
+            document.getElementById('TITIK_DISPOSAL_PIPE_static').value = data.TITIK_DISPOSAL_PIPE_static || '';
+            document.getElementById('LEBAR_MINIMAL_MCB_static').value = data.LEBAR_MINIMAL_MCB_static || '';
+            document.getElementById('LEBAR_MAXIMAL_MCB_static').value = data.LEBAR_MAXIMAL_MCB_static || '';
+            document.getElementById('TINGGI_MCB_static').value = data.TINGGI_MCB_static || '';
         } catch (error) {
             console.error('Error fetching data:', error);
         }

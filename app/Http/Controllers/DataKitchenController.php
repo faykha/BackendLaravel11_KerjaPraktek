@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DataKitchen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DataKitchenController extends Controller
 {
@@ -144,8 +145,6 @@ class DataKitchenController extends Controller
             $problemDetails[] = 'TINGGI_MCB tidak sesuai ketentuan ±10';
         }
     
-        // Simpan gambar jika ada
-        $path = $request->file('foto') ? $request->file('foto')->store('uploads') : null;
     
         // Simpan data kitchen dengan status is_problem dan problem_details
         $dataKitchen = DataKitchen::create(array_merge(
@@ -355,4 +354,63 @@ class DataKitchenController extends Controller
         ]);
     }
 
+    public function storeFoto(Request $request, $lantai, $unit)
+    {
+        $request->validate(['foto' => 'required|file|mimes:jpeg,png,jpg|max:2048']);
+
+        $dataKitchen = $this->findDataKitchenByLantaiAndUnit($lantai, $unit);
+
+        // Simpan foto di folder `public/uploads`
+        $path = $request->file('foto')->store('uploads', 'public');
+        $dataKitchen->foto = Storage::url($path);
+        $dataKitchen->save();
+
+        return response()->json(['message' => 'Foto berhasil disimpan.', 'foto_url' => $dataKitchen->foto], 201);
+    }
+
+    // Mengupdate foto yang ada berdasarkan lantai dan unit
+    public function updateFoto(Request $request, $lantai, $unit)
+    {
+        $request->validate(['foto' => 'required|file|mimes:jpeg,png,jpg|max:2048']);
+        $dataKitchen = $this->findDataKitchenByLantaiAndUnit($lantai, $unit);
+
+        // Hapus foto lama jika ada
+        if ($dataKitchen->foto) {
+            Storage::disk('public')->delete(str_replace('/storage/', '', $dataKitchen->foto));
+        }
+
+        // Simpan foto baru
+        $path = $request->file('foto')->store('uploads', 'public');
+        $dataKitchen->foto = Storage::url($path);
+        $dataKitchen->save();
+
+        return response()->json(['message' => 'Foto berhasil diperbarui.', 'foto_url' => $dataKitchen->foto], 200);
+    }
+
+    // Menghapus foto berdasarkan lantai dan unit
+    public function deleteFoto($lantai, $unit)
+    {
+        $dataKitchen = $this->findDataKitchenByLantaiAndUnit($lantai, $unit);
+
+        if (!$dataKitchen->foto) {
+            return response()->json(['message' => 'Tidak ada foto untuk dihapus.'], 404);
+        }
+
+        // Hapus foto dari storage
+        Storage::disk('public')->delete(str_replace('/storage/', '', $dataKitchen->foto));
+
+        // Set kolom `foto` menjadi null
+        $dataKitchen->foto = null;
+        $dataKitchen->save();
+
+        return response()->json(['message' => 'Foto berhasil dihapus.'], 200);
+    }
+
+    // Fungsi helper untuk mencari DataKitchen berdasarkan lantai dan unit
+    private function findDataKitchenByLantaiAndUnit($lantai, $unit)
+    {
+        return DataKitchen::whereHas('unit', function ($query) use ($lantai, $unit) {
+            $query->where('lantai', $lantai)->where('nama_unit', $unit);
+        })->firstOrFail();
+    }
 }

@@ -13,6 +13,14 @@ Route::put('data_kitchen/update', [DataKitchenController::class, 'updateByLantai
 Route::delete('data_kitchen/delete', [DataKitchenController::class, 'destroyByLantaiAndUnit']);
 Route::get('/problematic-units', [DataKitchenController::class, 'getProblematicUnits']);
 
+Route::post('/data-kitchen/{lantai}/{unit}/foto', [DataKitchenController::class, 'storeFoto']);
+
+// Mengupdate foto untuk data kitchen berdasarkan lantai dan unit
+Route::put('/data-kitchen/{lantai}/{unit}/foto', [DataKitchenController::class, 'updateFoto']);
+
+// Menghapus foto untuk data kitchen berdasarkan lantai dan unit
+Route::delete('/data-kitchen/{lantai}/{unit}/foto', [DataKitchenController::class, 'deleteFoto']);
+
 
 use App\Http\Controllers\TabelLantaiController;
 Route::get('tabel_lantai', [TabelLantaiController::class, 'index']);

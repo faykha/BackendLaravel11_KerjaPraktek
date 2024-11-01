@@ -78,7 +78,7 @@
                         <a class="nav-link active" href="#"><i class="bi bi-bar-chart"></i> Reports</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="bi bi-lightning-charge"></i> Data Statik</a>
+                        <a class="nav-link" href="{{ url('/datastatik') }}"><i class="bi bi-lightning-charge"></i> Data Statik</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="bi bi-people"></i> User</a>
