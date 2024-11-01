@@ -151,7 +151,6 @@ class DataKitchenController extends Controller
             $request->except(['lantai', 'unit', 'foto']),
             [
                 'unit_id' => $unit->id,
-                'foto' => $path,
                 'is_problem' => $isProblem,
                 'problem_details' => $isProblem ? implode('; ', $problemDetails) : null, // Menyimpan detail masalah sebagai teks
             ]
@@ -291,11 +290,7 @@ class DataKitchenController extends Controller
         $problemDetails[] = 'TINGGI_MCB tidak sesuai ketentuan ±10';
     }
 
-    // Jika ada file foto yang diunggah, perbarui file foto
-    if ($request->hasFile('foto')) {
-        $path = $request->file('foto')->store('uploads');
-        $dataKitchen->foto = $path;
-    }
+
 
     // Update data kitchen dengan status is_problem dan problem_details
     $dataKitchen->update(array_merge(
