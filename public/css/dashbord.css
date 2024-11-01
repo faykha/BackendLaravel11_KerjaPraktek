@@ -1,0 +1,171 @@
+/* Reset CSS dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Gaya dasar untuk layout dashboard */
+.dash-body {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
+/* Sidebar styling */
+.dash-sidebar {
+    width: 250px;
+    background-color: #ffffff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 2px 0px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dash-logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.dash-logo img {
+    width: 80px;
+    margin-bottom: 10px;
+}
+
+.dash-logo h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333333;
+}
+
+/* Navigation links */
+.dash-sidebar nav a {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.dash-sidebar nav a:hover,
+.dash-sidebar nav a.active {
+    background-color: #e0e0e0;
+}
+
+/* Profile section in sidebar */
+.dash-profile {
+    margin-top: auto;
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #dddddd;
+}
+
+.dash-profile img {
+    width: 50px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.dash-main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+/* Header styling */
+.dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.dash-header h1 {
+    font-size: 24px;
+    color: #333333;
+}
+
+.dash-filters select {
+    padding: 8px;
+    margin-right: 10px;
+}
+
+.dash-logout {
+    padding: 8px 16px;
+    background-color: #f44336;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.dash-logout:hover {
+    background-color: #c0392b;
+}
+
+/* Stat card styling */
+.dash-stats {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.dash-stat-card {
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    color: #333333;
+}
+
+.dash-stat-card span {
+    display: block;
+    font-size: 24px;
+    margin-top: 8px;
+}
+
+/* Activity and recent updates sections */
+.dash-activity,
+.dash-recent-updates {
+    margin-top: 20px;
+}
+
+.dash-activity h2,
+.dash-recent-updates h2 {
+    font-size: 18px;
+    color: #333333;
+    margin-bottom: 10px;
+}
+
+.dash-chart {
+    height: 200px;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999999;
+}
+
+/* Recent updates list */
+.dash-recent-updates ul {
+    list-style: none;
+}
+
+.dash-recent-updates li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    color: #666666;
+}

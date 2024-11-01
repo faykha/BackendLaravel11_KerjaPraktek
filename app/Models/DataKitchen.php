@@ -11,6 +11,8 @@ class DataKitchen extends Model
 
     protected $table = 'data_kitchen';
 
+    protected $primaryKey = 'id_data_kitchen';
+
     protected $fillable = [
         'LEBAR_BIDANG',
         'TINGGI_BALOK_A',

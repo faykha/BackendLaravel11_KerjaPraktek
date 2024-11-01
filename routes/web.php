@@ -24,3 +24,11 @@ Route::get('/', function () {
 });
 
 
+use App\Http\Controllers\DataStatikController;
+
+// Route untuk halaman CRUD
+Route::get('/datastatik', function () {
+    return view('datastatik'); // Pastikan file view bernama 'data-statik-crud.blade.php'
+});
+
+
