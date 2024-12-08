@@ -8,6 +8,21 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <!-- Link Font Awesome untuk ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+    background-color: #f0f0f0; /* Background warna abu-abu */
+    background-image: url('images/background.jpg'); /* Gambar sebagai background */
+    background-size: cover; /* Menutupi seluruh area */
+    background-position: center; /* Menempatkan gambar di tengah */
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    min-height: 100vh; /* Menggunakan seluruh tinggi layar */
+}
+    </style>
 </head>
 <body>
     <div class="login-container">

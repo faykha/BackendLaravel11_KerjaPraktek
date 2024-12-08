@@ -6,6 +6,133 @@
     <title>Data Statik CRUD</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+
+body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px; /* Membuat sudut lebih halus */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Efek bayangan ringan */
+    }
+
+    .table-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .form-control {
+        border-radius: 5px; /* Memberikan sudut yang lebih lembut */
+        border: 1px solid #ced4da; /* Border lebih ringan */
+        padding: 12px; /* Sedikit lebih besar agar nyaman digunakan */
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #007bff; /* Warna border ketika fokus */
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.25); /* Efek fokus dengan bayangan biru */
+    }
+
+    .btn {
+        border-radius: 5px;
+        padding: 10px 15px;
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3; /* Warna biru lebih gelap saat hover */
+        transition: background-color 0.3s;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border: none;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+        transition: background-color 0.3s;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        transition: background-color 0.3s;
+    }
+
+    /* Styling untuk tabel */
+    .table-responsive {
+        margin-top: 30px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table th, .table td {
+        padding: 12px;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .table th {
+        background-color: #343a40;
+        color: white;
+        font-weight: 600;
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .container {
+            padding: 20px;
+        }
+
+        .table-title {
+            font-size: 1.3rem;
+        }
+
+        .btn {
+            font-size: 0.9rem;
+            padding: 8px 12px;
+        }
+
+        .form-control {
+            padding: 10px;
+        }
+    }
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
@@ -24,6 +151,20 @@
         .table-responsive {
             overflow-x: auto;
         }
+        body {
+    background-color: #f0f0f0; /* Background warna abu-abu */
+    background-image: url('images/background.jpg'); /* Gambar sebagai background */
+    background-size: cover; /* Menutupi seluruh area */
+    background-position: center; /* Menempatkan gambar di tengah */
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    min-height: 100vh; /* Menggunakan seluruh tinggi layar */
+}
+
     </style>
 </head>
 <body>

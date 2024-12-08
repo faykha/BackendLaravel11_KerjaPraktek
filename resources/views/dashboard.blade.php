@@ -85,6 +85,58 @@
         color: #cce4ff; /* Warna biru terang untuk teks saat hover */
         text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5); /* Bayangan pada teks */
     }
+    /* Navbar Fixed di Atas */
+.sidebar {
+    background-color: #ffffff;
+    min-height: 100vh;
+    padding: 20px;
+    box-shadow: 2px 0px 8px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Membuat sidebar tetap di posisi tetap */
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1000; /* Menjaga sidebar di atas konten */
+    width: 250px; /* Sesuaikan lebar sidebar */
+}
+
+/* Memberikan margin ke konten utama agar tidak tertutup sidebar */
+.content {
+    margin-left: 250px; /* Menyesuaikan lebar sidebar */
+    padding: 20px;
+}
+
+/* Footer Fixed di Bawah */
+.footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    color: #777;
+    background-color: #f8f9fa;
+    padding: 10px 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.footer:hover {
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+body {
+    background-color: #f0f0f0; /* Background warna abu-abu */
+    background-image: url('images/background.jpg'); /* Gambar sebagai background */
+    background-size: cover; /* Menutupi seluruh area */
+    background-position: center; /* Menempatkan gambar di tengah */
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    min-height: 100vh; /* Menggunakan seluruh tinggi layar */
+}
+
+
     </style>
 </head>
 <body>
@@ -125,7 +177,7 @@
 </ul>
 
                 <div class="footer">
-                    <p>Made By CodeCrafter</p>
+                    <p>CodeCrafter</p>
                 </div>
             </div>
 

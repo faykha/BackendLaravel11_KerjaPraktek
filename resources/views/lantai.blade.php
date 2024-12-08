@@ -7,6 +7,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manajemen Lantai</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+       /* Styling for the body */
+body {
+    background-color: #f8f9fa; /* Light grey background */
+    background-image: url('images/background.jpg'); /* Background image */
+    background-size: cover; /* Cover the whole area */
+    background-position: center; /* Center the background image */
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid {
+    min-height: 100vh; /* Use full screen height */
+    padding-top: 40px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #343a40;
+}
+
+.btn {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.modal-content {
+    border-radius: 8px;
+}
+
+.modal-header {
+    background-color: #007bff;
+    color: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+}
+
+.form-control {
+    border-radius: 8px;
+}
+
+table {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+thead {
+    background-color: #007bff;
+    color: white;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+.table-responsive {
+    margin-top: 20px;
+}
+
+/* Custom styling for buttons inside the table */
+.btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #e0a800;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+}
+
+.modal-body {
+    background-color: #f8f9fa;
+}
+
+.modal-footer {
+    border-top: 1px solid #ddd;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    .table th, .table td {
+        font-size: 0.875rem;
+        padding: 8px;
+    }
+}
+
+    </style>
 </head>
 <body>
     <div class="container mt-5">

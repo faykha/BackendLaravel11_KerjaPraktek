@@ -5,6 +5,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Staff CRUD</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      /* General body styling */
+body {
+    background-color: #f0f0f0; /* Light grey background */
+    background-image: url('images/background.jpg'); /* Background image */
+    background-size: cover; /* Cover the whole screen */
+    background-position: center; /* Center the background image */
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container styling */
+.container {
+    min-height: 100vh;
+    padding-top: 40px;
+}
+
+/* Heading styling */
+h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #343a40;
+}
+
+/* Form styling */
+.form-label {
+    font-weight: bold;
+    color: #495057;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 5px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Message box styling */
+#message {
+    font-size: 1.2rem;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Table styling */
+.table {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: center;
+}
+
+.table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.table .btn {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.table .btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.table .btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #e0a800;
+}
+
+.table .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.table .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+}
+
+/* Button styling */
+.btn-close {
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 2rem;
+    }
+
+    .table th, .table td {
+        font-size: 0.875rem;
+        padding: 8px;
+    }
+
+    .form-control, .form-select {
+        font-size: 0.875rem;
+    }
+
+    .modal-dialog {
+        max-width: 90%;
+    }
+}
+
+
+.container-fluid {
+    min-height: 100vh; /* Menggunakan seluruh tinggi layar */
+}
+    </style>
 </head>
 <body>
 <div class="container">
