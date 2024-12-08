@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\DataStatik;
@@ -26,9 +25,10 @@ class DataStatikController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi input
         $validated = $request->validate([
-            'type_unit' => 'required|string|unique:data_statik,type_unit|max:255',
-            'LEBAR_BIDANG_static' => 'nullable|integer',
+            'type_unit' => 'required|string|unique:data_statik,type_unit|max:255', // type_unit harus unik
+            'LEBAR_BIDANG_static' => 'nullable|integer', // Kolom opsional, validasi integer jika ada
             'TINGGI_BALOK_A_static' => 'nullable|integer',
             'TINGGI_BALOK_B_static' => 'nullable|integer',
             'TINGGI_CEILING_A_static' => 'nullable|integer',
@@ -44,9 +44,23 @@ class DataStatikController extends Controller
             'LEBAR_MAXIMAL_MCB_static' => 'nullable|integer',
             'TINGGI_MCB_static' => 'nullable|integer',
         ]);
-
-        $dataStatik = DataStatik::create($validated);
-        return response()->json($dataStatik, 201);
+    
+        try {
+            // Simpan data ke dalam database
+            $dataStatik = DataStatik::create($validated);
+    
+            // Mengembalikan response jika berhasil
+            return response()->json([
+                'message' => 'Data statik berhasil disimpan.',
+                'data' => $dataStatik
+            ], 201); // 201 Created
+        } catch (\Exception $e) {
+            // Menangani error jika ada yang gagal
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat menyimpan data.',
+                'error' => $e->getMessage()
+            ], 500); // 500 Internal Server Error
+        }
     }
 
     /**

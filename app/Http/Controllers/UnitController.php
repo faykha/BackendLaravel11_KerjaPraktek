@@ -8,9 +8,18 @@ use Illuminate\Http\Request;
 class UnitController extends Controller
 {
     // Menampilkan semua data unit
-    public function index()
+    public function index(Request $request)
     {
-        $units = Unit::with('lantaiRelation')->get();
+        $lantai = $request->query('lantai');
+        
+        // Jika ada parameter lantai, kita filter berdasarkan lantai
+        if ($lantai) {
+            $units = Unit::where('lantai', $lantai)->with('lantaiRelation')->get();
+        } else {
+            // Jika tidak ada filter lantai, tampilkan semua unit
+            $units = Unit::with('lantaiRelation')->get();
+        }
+
         return response()->json($units);
     }
 

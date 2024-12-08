@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Statik CRUD</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -30,6 +29,9 @@
 <body>
 
 <div class="container">
+<div class="mb-3">
+        <a href="/dashboard" class="btn btn-primary">Home</a>
+    </div>
     <h2 class="table-title">Data Statik CRUD</h2>
 
     <!-- Form untuk Menambah atau Memperbarui Data -->
@@ -98,7 +100,7 @@
             <label for="TINGGI_MCB_static" class="form-label">TINGGI MCB Static</label>
             <input type="number" class="form-control" id="TINGGI_MCB_static">
         </div>
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="submit" class="btn btn-primary" id="saveBtn">Simpan</button>
     </form>
 
     <!-- Tabel Data -->
@@ -131,13 +133,11 @@
         </table>
     </div>
 </div>
-</div>
 
-<!-- Bootstrap JS & Icons -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    const apiUrl = 'http://localhost:8000/api/data-statik';
+    const apiUrl = 'https://qc-pass.technice.id/api/data-statik';
 
     // Fungsi untuk mengambil dan menampilkan semua data
     async function fetchData() {
@@ -155,8 +155,6 @@
                     <td>${item.TINGGI_BALOK_A_static || '-'}</td>
                     <td>${item.TINGGI_BALOK_B_static || '-'}</td>
                     <td>${item.TINGGI_CEILING_A_static || '-'}</td>
-                    <td>${item.TINGGI_BALOK_B_static || '-'}</td>
-                    <td>${item.TINGGI_CEILING_A_static || '-'}</td>
                     <td>${item.TINGGI_CEILING_B_static || '-'}</td>
                     <td>${item.TINGGI_CEILING_C_static || '-'}</td>
                     <td>${item.Siku_Dinding_base_static || '-'}</td>
@@ -169,8 +167,8 @@
                     <td>${item.LEBAR_MAXIMAL_MCB_static || '-'}</td>
                     <td>${item.TINGGI_MCB_static || '-'}</td>
                     <td>
-                        <button class="btn btn-sm btn-warning" onclick="editData('${item.type_unit}')">Edit</button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteData('${item.type_unit}')">Delete</button>
+                        <button class="btn btn-warning btn-sm" onclick="editData('${item.type_unit}')">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteData('${item.type_unit}')">Delete</button>
                     </td>
                 `;
                 tableBody.appendChild(row);
@@ -180,9 +178,10 @@
         }
     }
 
-    // Fungsi untuk menambah atau memperbarui data
+    // Fungsi untuk menambah data (POST)
     document.getElementById('dataForm').addEventListener('submit', async function(event) {
         event.preventDefault();
+
         const data = {
             type_unit: document.getElementById('type_unit').value,
             LEBAR_BIDANG_static: document.getElementById('LEBAR_BIDANG_static').value || null,
@@ -202,22 +201,18 @@
             TINGGI_MCB_static: document.getElementById('TINGGI_MCB_static').value || null,
         };
 
-        const method = data.type_unit ? 'PUT' : 'POST';
-        const url = method === 'PUT' ? `${apiUrl}/${data.type_unit}` : apiUrl;
-        
+        // POST request untuk menambah data baru
         try {
-            const response = await fetch(url, {
-                method: method,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
             });
 
             if (response.ok) {
-                fetchData(); // Refresh data setelah berhasil disimpan
-                document.getElementById('dataForm').reset(); // Reset form
+                fetchData();  // Ambil dan tampilkan data terbaru
                 alert('Data berhasil disimpan');
+                document.getElementById('dataForm').reset(); // Reset form setelah simpan
             } else {
                 alert('Gagal menyimpan data');
             }
@@ -226,52 +221,101 @@
         }
     });
 
-    // Fungsi untuk mengedit data (mengisi form dengan data yang akan diedit)
+    // Fungsi untuk edit data (memuat data ke form)
     async function editData(type_unit) {
         try {
             const response = await fetch(`${apiUrl}/${type_unit}`);
             const data = await response.json();
-            
+
+            // Isi form dengan data yang akan diedit
             document.getElementById('type_unit').value = data.type_unit;
-            document.getElementById('LEBAR_BIDANG_static').value = data.LEBAR_BIDANG_static || '';
-            document.getElementById('TINGGI_BALOK_A_static').value = data.TINGGI_BALOK_A_static || '';
-            document.getElementById('TINGGI_BALOK_B_static').value = data.TINGGI_BALOK_B_static || '';
-            document.getElementById('TINGGI_CEILING_A_static').value = data.TINGGI_CEILING_A_static || '';
-            document.getElementById('TINGGI_CEILING_B_static').value = data.TINGGI_CEILING_B_static || '';
-            document.getElementById('TINGGI_CEILING_C_static').value = data.TINGGI_CEILING_C_static || '';
-            document.getElementById('Siku_Dinding_base_static').value = data.Siku_Dinding_base_static || '';
-            document.getElementById('Siku_Dinding_wall_static').value = data.Siku_Dinding_wall_static || '';
-            document.getElementById('Sudut_Lantai_x_Dinding_static').value = data.Sudut_Lantai_x_Dinding_static || '';
-            document.getElementById('TITIK_KRAN_AIR_L_static').value = data.TITIK_KRAN_AIR_L_static || '';
-            document.getElementById('TITIK_KRAN_AIR_T_static').value = data.TITIK_KRAN_AIR_T_static || '';
-            document.getElementById('TITIK_DISPOSAL_PIPE_static').value = data.TITIK_DISPOSAL_PIPE_static || '';
-            document.getElementById('LEBAR_MINIMAL_MCB_static').value = data.LEBAR_MINIMAL_MCB_static || '';
-            document.getElementById('LEBAR_MAXIMAL_MCB_static').value = data.LEBAR_MAXIMAL_MCB_static || '';
-            document.getElementById('TINGGI_MCB_static').value = data.TINGGI_MCB_static || '';
+            document.getElementById('LEBAR_BIDANG_static').value = data.LEBAR_BIDANG_static;
+            document.getElementById('TINGGI_BALOK_A_static').value = data.TINGGI_BALOK_A_static;
+            document.getElementById('TINGGI_BALOK_B_static').value = data.TINGGI_BALOK_B_static;
+            document.getElementById('TINGGI_CEILING_A_static').value = data.TINGGI_CEILING_A_static;
+            document.getElementById('TINGGI_CEILING_B_static').value = data.TINGGI_CEILING_B_static;
+            document.getElementById('TINGGI_CEILING_C_static').value = data.TINGGI_CEILING_C_static;
+            document.getElementById('Siku_Dinding_base_static').value = data.Siku_Dinding_base_static;
+            document.getElementById('Siku_Dinding_wall_static').value = data.Siku_Dinding_wall_static;
+            document.getElementById('Sudut_Lantai_x_Dinding_static').value = data.Sudut_Lantai_x_Dinding_static;
+            document.getElementById('TITIK_KRAN_AIR_L_static').value = data.TITIK_KRAN_AIR_L_static;
+            document.getElementById('TITIK_KRAN_AIR_T_static').value = data.TITIK_KRAN_AIR_T_static;
+            document.getElementById('TITIK_DISPOSAL_PIPE_static').value = data.TITIK_DISPOSAL_PIPE_static;
+            document.getElementById('LEBAR_MINIMAL_MCB_static').value = data.LEBAR_MINIMAL_MCB_static;
+            document.getElementById('LEBAR_MAXIMAL_MCB_static').value = data.LEBAR_MAXIMAL_MCB_static;
+            document.getElementById('TINGGI_MCB_static').value = data.TINGGI_MCB_static;
+
+            // Ubah tombol simpan menjadi update
+            const saveButton = document.getElementById('saveBtn');
+            saveButton.textContent = 'Update';
+            saveButton.onclick = () => updateData(type_unit); // Panggil fungsi update ketika tombol diklik
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error editing data:', error);
+        }
+    }
+
+    // Fungsi untuk update data (PUT)
+    async function updateData(type_unit) {
+        const data = {
+            type_unit: document.getElementById('type_unit').value,
+            LEBAR_BIDANG_static: document.getElementById('LEBAR_BIDANG_static').value || null,
+            TINGGI_BALOK_A_static: document.getElementById('TINGGI_BALOK_A_static').value || null,
+            TINGGI_BALOK_B_static: document.getElementById('TINGGI_BALOK_B_static').value || null,
+            TINGGI_CEILING_A_static: document.getElementById('TINGGI_CEILING_A_static').value || null,
+            TINGGI_CEILING_B_static: document.getElementById('TINGGI_CEILING_B_static').value || null,
+            TINGGI_CEILING_C_static: document.getElementById('TINGGI_CEILING_C_static').value || null,
+            Siku_Dinding_base_static: document.getElementById('Siku_Dinding_base_static').value || null,
+            Siku_Dinding_wall_static: document.getElementById('Siku_Dinding_wall_static').value || null,
+            Sudut_Lantai_x_Dinding_static: document.getElementById('Sudut_Lantai_x_Dinding_static').value || null,
+            TITIK_KRAN_AIR_L_static: document.getElementById('TITIK_KRAN_AIR_L_static').value || null,
+            TITIK_KRAN_AIR_T_static: document.getElementById('TITIK_KRAN_AIR_T_static').value || null,
+            TITIK_DISPOSAL_PIPE_static: document.getElementById('TITIK_DISPOSAL_PIPE_static').value || null,
+            LEBAR_MINIMAL_MCB_static: document.getElementById('LEBAR_MINIMAL_MCB_static').value || null,
+            LEBAR_MAXIMAL_MCB_static: document.getElementById('LEBAR_MAXIMAL_MCB_static').value || null,
+            TINGGI_MCB_static: document.getElementById('TINGGI_MCB_static').value || null,
+        };
+
+        try {
+            const response = await fetch(`${apiUrl}/${type_unit}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                fetchData(); // Ambil data terbaru
+                alert('Data berhasil diperbarui');
+                document.getElementById('dataForm').reset(); // Reset form setelah update
+                const saveButton = document.getElementById('saveBtn');
+                saveButton.textContent = 'Simpan'; // Reset tombol ke "Simpan"
+            } else {
+                alert('Gagal memperbarui data');
+            }
+        } catch (error) {
+            console.error('Error updating data:', error);
         }
     }
 
     // Fungsi untuk menghapus data
     async function deleteData(type_unit) {
-        if (confirm('Yakin ingin menghapus data ini?')) {
-            try {
-                const response = await fetch(`${apiUrl}/${type_unit}`, { method: 'DELETE' });
-                if (response.ok) {
-                    fetchData(); // Refresh data setelah berhasil dihapus
-                    alert('Data berhasil dihapus');
-                } else {
-                    alert('Gagal menghapus data');
-                }
-            } catch (error) {
-                console.error('Error deleting data:', error);
+        try {
+            const response = await fetch(`${apiUrl}/${type_unit}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                fetchData();  // Ambil dan tampilkan data terbaru setelah dihapus
+                alert('Data berhasil dihapus');
+            } else {
+                alert('Gagal menghapus data');
             }
+        } catch (error) {
+            console.error('Error deleting data:', error);
         }
     }
 
-    // Panggil fetchData saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', fetchData);
+    // Ambil data ketika halaman dimuat
+    fetchData();
 </script>
 
 </body>

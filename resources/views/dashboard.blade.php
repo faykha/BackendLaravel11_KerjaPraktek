@@ -29,7 +29,7 @@
             align-items: center;
         }
         .sidebar .nav-link.active, .sidebar .nav-link:hover {
-            color: #007bff;
+            color: #ffffff;
         }
         .sidebar .footer {
             position: absolute;
@@ -62,6 +62,29 @@
             text-align: center;
             margin: 20px 0;
         }
+        .nav-container {
+        padding: 10px;
+        border: 1px solid #0056b3; /* Border biru */
+        border-radius: 20px;
+        background-color: #007bff; /* Warna latar belakang biru */
+        color: white; /* Warna teks putih agar kontras */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+    .nav-container:hover {
+        background-color: #007bff; /* Warna biru lebih gelap saat hover */
+        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3); /* Bayangan biru saat hover */
+    }
+    .nav-container .nav-link {
+        text-decoration: none;
+        color: white; /* Warna teks putih */
+        font-weight: bold;
+        transition: color 0.3s;
+    }
+    .nav-container .nav-link:hover {
+        color: #cce4ff; /* Warna biru terang untuk teks saat hover */
+        text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5); /* Bayangan pada teks */
+    }
     </style>
 </head>
 <body>
@@ -74,34 +97,35 @@
                     <h6>Service Solution Project</h6>
                 </div>
                 <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#"><i class="bi bi-bar-chart"></i> Reports</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/datastatik') }}"><i class="bi bi-lightning-charge"></i> Data Statik</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="bi bi-people"></i> User</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="bi bi-building"></i> Lantai</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="bi bi-box-seam"></i> Unit</a>
-                    </li>
-                </ul>
-                <hr>
-                <h6 class="text-muted">Support</h6>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="bi bi-question-circle"></i> Get Help</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="bi bi-gear"></i> Settings</a>
-                    </li>
-                </ul>
+    <div class="nav-container mb-3">
+        <li class="nav-item">
+            <a class="nav-link active" href="#"><i class="bi bi-bar-chart"></i> Reports</a>
+        </li>
+    </div>
+    <div class="nav-container mb-3">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/datastatik') }}"><i class="bi bi-lightning-charge"></i> Data Statik</a>
+        </li>
+    </div>
+    <div class="nav-container mb-3">
+        <li class="nav-item">
+            <a class="nav-link" href="/user"><i class="bi bi-people"></i> User</a>
+        </li>
+    </div>
+    <div class="nav-container mb-3">
+        <li class="nav-item">
+            <a class="nav-link" href="/lantai"><i class="bi bi-building"></i> Lantai</a>
+        </li>
+    </div>
+    <div class="nav-container mb-3">
+        <li class="nav-item">
+            <a class="nav-link" href="/unit"><i class="bi bi-box-seam"></i> Unit</a>
+        </li>
+    </div>
+</ul>
+
                 <div class="footer">
-                    <p>Administrator</p>
+                    <p>Made By CodeCrafter</p>
                 </div>
             </div>
 
@@ -109,25 +133,31 @@
             <div class="col-md-10 content">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Reports</h2>
-                    <a href="#" class="logout">Log Out</a>
-                </div>
-
-                <!-- Filter Section -->
-                <div class="filters d-flex mb-4">
-                    <select class="form-select">
-                        <option selected>Lantai</option>
-                    </select>
-                </div>
+                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: inline;">
+            @csrf
+            <button type="submit" class="btn btn-link logout" style="text-decoration: none; color: #555; font-weight: bold;">Log Out</button>
+        </form>
+                    </div>
 
                 <!-- Stats Cards -->
                 <div class="row">
-                    <div class="col-md-3">
-                        <div class="card">
-                            <h5>Data Problem</h5>
-                            <h3 id="dataProblemCount">0</h3> <!-- Menampilkan jumlah data problem -->
-                        </div>
-                    </div>
-                </div>
+    <!-- Card untuk Data All -->
+    <div class="col-md-3">
+        <div class="card">
+            <h5>Data All</h5>
+            <h3 id="dataAll">0</h3> <!-- Menampilkan jumlah data semua -->
+        </div>
+    </div>
+
+    <!-- Card untuk Data Problem -->
+    <div class="col-md-3">
+        <div class="card">
+            <h5>Data Problem</h5>
+            <h3 id="dataProblemCount">0</h3> <!-- Menampilkan jumlah data bermasalah -->
+        </div>
+    </div>
+</div>
+
 
                 <!-- Table Section -->
                 <div class="table-title">Daftar Unit dan Lantai yang Bermasalah</div>
@@ -155,9 +185,31 @@
 
     <script>
         // Fungsi untuk mengambil data dari API dan menampilkannya di tabel
+
+        async function fetchKitchenData() {
+        try {
+            // Ganti dengan URL yang benar untuk endpoint data_kitchen
+            const response = await fetch('https://qc-pass.technice.id/api/data_kitchen'); 
+            const data = await response.json();
+
+            if (data) {
+                const dataAllCount = document.getElementById('dataAll'); // Card untuk Data All
+                // Update jumlah data All
+                dataAllCount.textContent = data.length; // Menampilkan jumlah total data
+
+            } else {
+                console.error('Data tidak ditemukan');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    // Panggil fungsi untuk mengambil data kitchen saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', fetchKitchenData);
         async function fetchProblematicUnits() {
             try {
-                const response = await fetch('http://localhost:8000/api/problematic-units');
+                const response = await fetch('https://qc-pass.technice.id/api/problematic-units');
                 const data = await response.json();
 
                 if (data && data.data) {
